@@ -167,5 +167,5 @@ Botanist/trained_models
 *.pth
 *Gotham
 *predictions.csv
-*log/*
+*log/
 *PredictionCsv/
