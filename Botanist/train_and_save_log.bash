@@ -1,0 +1,1 @@
+python botanist.py > train_log.txt

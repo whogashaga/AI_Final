@@ -8,7 +8,9 @@ from torchvision import transforms, datasets
 from torch.utils.data import DataLoader, Dataset, random_split
 from PIL import Image
 import time
-import sys
+from datetime import datetime
+
+print(f"~ ~ ~ ~ ~ ~ ~ {datetime.now().strftime('%Y/%m/%d %H:%M:%S')} ~ ~ ~ ~ ~ ~ ~")
 
 def checkCudaAvaiable():
     if torch.cuda.is_available():
@@ -78,14 +80,14 @@ class LeafCNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),                   # Input: (128, 64, 64) , Output: (128, 32, 32)
             
-            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1), # Input: (128, 32, 32) , Output: (256, 32, 32)
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),                   # Input: (256, 32, 32) , Output: (256, 16, 16)
+            # nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1), # Input: (128, 32, 32) , Output: (256, 32, 32)
+            # nn.ReLU(),
+            # nn.MaxPool2d(kernel_size=2, stride=2),                   # Input: (256, 32, 32) , Output: (256, 16, 16)
             
             nn.Flatten(),                  # Input: (256, 32, 32) , Output: (256x16x16, ) = (65536, )  {flatten a 3D tensor into 1D tensor}
             nn.Dropout(0.5),               # dropout probability of 0.5 to reduce overfitting
-            nn.Linear(256 * 16 * 16, 512), # Input: (65536, ) , Output: (512, )
-            # nn.Linear(128 * 32 * 32, 512),
+            # nn.Linear(256 * 16 * 16, 512), # Input: (65536, ) , Output: (512, )
+            nn.Linear(128 * 32 * 32, 512),
             nn.ReLU(),
             nn.Dropout(0.5),
             nn.Linear(512, 38)             # Input: (512, ) , Output: (38, ) 
@@ -105,7 +107,7 @@ if __name__ == "__main__" and torch.cuda.is_available():
     total_start = time.time()
     start = time.time()
 
-    num_epochs = 30
+    num_epochs = 20
     print(f"start training... epoch: {num_epochs}, batch: {batch_size}, train: {train_size}")
 
     for epoch in range(num_epochs):

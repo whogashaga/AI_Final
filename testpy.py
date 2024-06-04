@@ -1,5 +1,7 @@
 import torch
+from datetime import datetime
 
+print(datetime.now().strftime('%Y/%m/%d %H:%M:%S'))
 # Create custom index ranges for 5 folds
 # fold_indices = [
 #     list(range(0, 10000)),
