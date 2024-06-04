@@ -6,8 +6,7 @@ import torch
 from torchvision.transforms import transforms, ToTensor
 from torch.utils.data import DataLoader, random_split
 from botanist import (LeafDataset,DataLoader, Dataset, model, 
-                      model_path, device, device, 
-                      test_loader, dataset, checkCudaAvaiable)
+                      device, device, test_loader, dataset, checkCudaAvaiable)
 
 checkCudaAvaiable()
 
@@ -29,6 +28,7 @@ class ValLeafDataset(Dataset):
 
         return image, self.image_files[idx]  # Return the image and its filename
 
+model_path = 'trained_models/cnn_35k_98.81.pth'
 
 if __name__ == "__main__":
     # model = LeafCNN()
@@ -52,12 +52,12 @@ if __name__ == "__main__":
 
             predicted = predicted.cpu().numpy()  # np can only run on CPU
 
-            filenames = [str(f.item()) for f in filenames]    # Ensure filenames are in a plain text format
+            filenames = [str(f).replace('.jpg', '') for f in filenames]    # Ensure filenames are in a plain text format
             for filename, label in zip(filenames, predicted):
                 predictions.append((filename, label + 1))     # Adjust back to 1-38 for the output
     
-    print(f"Elapsed time: {str(round(time.time()-start, 3))}")
+    print(f"Testset size: {len(val_dataset)}, Elapsed time: {str(round(time.time()-start, 3))}")
     # Create DataFrame and save to CSV
-    
+
     predictions_df = pd.DataFrame(predictions, columns=['filename', 'label'])
-    predictions_df.to_csv('val_predictions.csv', index=False)
+    predictions_df.to_csv('val_predictions2.csv', index=False)

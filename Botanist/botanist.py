@@ -10,9 +10,8 @@ from PIL import Image
 import time
 from datetime import datetime
 
-print(f"~ ~ ~ ~ ~ ~ ~ {datetime.now().strftime('%Y/%m/%d %H:%M:%S')} ~ ~ ~ ~ ~ ~ ~")
-
 def checkCudaAvaiable():
+    print(f"~ ~ ~ ~ ~ ~ ~ {datetime.now().strftime('%Y/%m/%d %H:%M:%S')} ~ ~ ~ ~ ~ ~ ~")
     if torch.cuda.is_available():
         print("CUDA and NV GPU detected.")
     else:
@@ -48,12 +47,16 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
+
+num_epochs = 30
 batch_size = 64
+model_path = "trained_models/ep30_50k_lay4.pth"
+predictions_path = 'predictionCsv/pred_ep30_50k_lay4.csv'
 
 # Dataset
 dataset = LeafDataset(csv_file='Botanist_Training_Set.csv', root_dir='TrainFiles/', transform=transforms.ToTensor())
 
-train_size = 45000
+train_size = 50000
 test_size = len(dataset) - train_size
 train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
 
@@ -80,14 +83,14 @@ class LeafCNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),                   # Input: (128, 64, 64) , Output: (128, 32, 32)
             
-            # nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1), # Input: (128, 32, 32) , Output: (256, 32, 32)
-            # nn.ReLU(),
-            # nn.MaxPool2d(kernel_size=2, stride=2),                   # Input: (256, 32, 32) , Output: (256, 16, 16)
+            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1), # Input: (128, 32, 32) , Output: (256, 32, 32)
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),                   # Input: (256, 32, 32) , Output: (256, 16, 16)
             
             nn.Flatten(),                  # Input: (256, 32, 32) , Output: (256x16x16, ) = (65536, )  {flatten a 3D tensor into 1D tensor}
             nn.Dropout(0.5),               # dropout probability of 0.5 to reduce overfitting
-            # nn.Linear(256 * 16 * 16, 512), # Input: (65536, ) , Output: (512, )
-            nn.Linear(128 * 32 * 32, 512),
+            nn.Linear(256 * 16 * 16, 512), # Input: (65536, ) , Output: (512, )
+            # nn.Linear(128 * 32 * 32, 512),
             nn.ReLU(),
             nn.Dropout(0.5),
             nn.Linear(512, 38)             # Input: (512, ) , Output: (38, ) 
@@ -99,7 +102,6 @@ class LeafCNN(nn.Module):
 model = LeafCNN().to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-model_path = "leaf_cnn_model.pth"
 
 # Training Flow
 if __name__ == "__main__" and torch.cuda.is_available():
@@ -107,7 +109,6 @@ if __name__ == "__main__" and torch.cuda.is_available():
     total_start = time.time()
     start = time.time()
 
-    num_epochs = 20
     print(f"start training... epoch: {num_epochs}, batch: {batch_size}, train: {train_size}")
 
     for epoch in range(num_epochs):
@@ -163,4 +164,4 @@ if __name__ == "__main__" and torch.cuda.is_available():
 
     # Create DataFrame and save to CSV
     predictions_df = pd.DataFrame(predictions, columns=['filename', 'label'])
-    predictions_df.to_csv('predictions.csv', index=False)
+    predictions_df.to_csv(predictions_path, index=False)
