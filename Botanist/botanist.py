@@ -39,7 +39,7 @@ class LeafDataset(Dataset):
 
 # Transformations
 transform = transforms.Compose([
-    transforms.Resize((256, 256)),          # Resize images to 256x256
+    # transforms.Resize((256, 256)),          # Resize images to 256x256
     # transforms.RandomHorizontalFlip(),      # Data Augmentation 1
     # transforms.RandomVerticalFlip(),        # Data Augmentation 2
     # transforms.RandomRotation((-45, 45)),   # Data Augmentation 3
@@ -49,7 +49,7 @@ transform = transforms.Compose([
 batch_size = 64
 
 # Dataset
-dataset = LeafDataset(csv_file='Botanist_Training_Set.csv', root_dir='TrainFiles/', transform=transform)
+dataset = LeafDataset(csv_file='Botanist_Training_Set.csv', root_dir='TrainFiles/', transform=transforms.ToTensor())
 
 train_size = 45000
 test_size = len(dataset) - train_size
@@ -105,8 +105,8 @@ if __name__ == "__main__" and torch.cuda.is_available():
     total_start = time.time()
     start = time.time()
 
-    num_epochs = 20
-    print(f"start training...{num_epochs}, {test_size}")
+    num_epochs = 30
+    print(f"start training... epoch: {num_epochs}, batch: {batch_size}, train: {train_size}")
 
     for epoch in range(num_epochs):
         model.train()

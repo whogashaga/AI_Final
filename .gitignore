@@ -162,6 +162,8 @@ cython_debug/
 #.idea/
 
 Botanist/TrainFiles
+Botanist/TestFiles
 Botanist/trained_models
 *.pth
 *Gotham
+*predictions.csv
