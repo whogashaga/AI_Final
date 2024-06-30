@@ -169,3 +169,4 @@ Botanist/trained_models
 *predictions.csv
 *log/
 *PredictionCsv/
+*.zip
