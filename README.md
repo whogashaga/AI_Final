@@ -1,10 +1,10 @@
 # Machine Learning Final Project - Botanist
 
 ## Introduction
-In this project, we developed a classification model to classify leaf images into 38 different classes, representing various plant breeds and potential diseases. We utilized Convolutional Neural Networks (CNNs) because of their effectiveness in image classification problems. PyTorch was chosen over TensorFlow due to its popularity in the industry.
+In this project, I developed a classification model to classify leaf images into 38 different classes, representing various plant breeds and potential diseases. We utilized Convolutional Neural Networks (CNNs) because of their effectiveness in image classification problems. PyTorch was chosen over TensorFlow due to its popularity in the industry.
 
 ## Model Structure
-We designed a CNN model called `LeafCNN`:
+I designed a CNN model called `LeafCNN`:
 - Four convolutional layers with increasing filter sizes (32 → 64 → 128 → 256).
 - Each convolutional layer is followed by:
   - A ReLU activation function.
