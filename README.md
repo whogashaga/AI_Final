@@ -92,13 +92,13 @@ We designed a CNN model called `LeafCNN`:
     
 ## Summary
 
-#### The best configuration:
+#### - The best configuration:
   - Four convolutional layers.
   - 30 epochs.
   - Batch size of 64.
   - No data augmentation.
 
-#### Using the full dataset of 50,000 images, the final model achieved an accuracy of **98.43%**.
+#### - Using the full dataset of 50,000 images, the final model achieved an accuracy of **98.43%**.
 
-#### These results demonstrate the importance of hyperparameter tuning and iterative experimentation in achieving high-performing models.
+#### - These results demonstrate the importance of hyperparameter tuning and iterative experimentation in achieving high-performing models.
 
