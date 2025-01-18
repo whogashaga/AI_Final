@@ -87,10 +87,8 @@ We designed a CNN model called `LeafCNN`:
   <img
     src="/Submission/diff_data_augment.png"
     alt="The comparison of different combinations of data augmentation."
-    width="533" height="273>
-<figcaption>Figure 5: The comparison of different combinations of data augmentation.</figcaption>
-
-###     
+    width="533" height="273">
+<figcaption>Figure 5: The comparison of different combinations of data augmentation.</figcaption><br>
     
 ## Summary
 
